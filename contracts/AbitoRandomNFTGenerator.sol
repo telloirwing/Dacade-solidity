@@ -161,26 +161,7 @@ contract AbitoRandomNFTGenerator is
         numberOfAddressesWhitelisted -= 1;
     }
 
-    function getNumberOfWhitelistedAddresses() public view returns (uint256) {
-        return numberOfAddressesWhitelisted;
-    }
 
-    function getMaxNumberOfWhitelistedAddresses()
-        public
-        view
-        returns (uint256)
-    {
-        return maxNumberOfWhitelistedAddresses;
-    }
-
-    function verifyUserAddress(address _whitelistedAddress)
-        public
-        view
-        returns (bool)
-    {
-        bool userIsWhitelisted = whitelistedAddresses[_whitelistedAddress];
-        return userIsWhitelisted;
-    }
 
     function isWhitelisted(address _whitelistedAddress)
         public
@@ -219,11 +200,9 @@ contract AbitoRandomNFTGenerator is
         public
         payable
         enablePublicMinting
+        requireMintFee
         returns (uint256 requestId)
     {
-        if (msg.value < i_mintFee) {
-            revert AbitoRandomNFTGenerator__NotEnoughETHSent();
-        }
         requestId = i_coordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
